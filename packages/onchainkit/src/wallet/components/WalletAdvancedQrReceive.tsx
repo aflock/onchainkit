@@ -87,7 +87,10 @@ export function WalletAdvancedQrReceive({
         <PressableIcon ariaLabel="Back button" onClick={handleCloseQr}>
           <div className="p-2">{backArrowSvg}</div>
         </PressableIcon>
-        <span>Scan to receive</span>
+        <div className="flex flex-col items-center">
+          <span className="font-semibold">Scan to receive</span>
+          <span className="text-xs opacity-70 mt-0.5">Share your wallet address</span>
+        </div>
         <div className="group relative">
           <CopyButton
             label={copySvg}
@@ -120,14 +123,28 @@ export function WalletAdvancedQrReceive({
           />
         </div>
       </div>
-      <QrCodeSvg value={address} />
+      <div className="flex flex-col items-center space-y-4">
+        <div className="p-4 bg-white rounded-2xl shadow-lg">
+          <QrCodeSvg 
+            value={address}
+            size={200}
+            gradientType="linear"
+            quietZoneBorderRadius={16}
+          />
+        </div>
+        <div className="text-center max-w-[280px]">
+          <p className="text-sm opacity-80 break-all font-mono px-2 py-1 bg-gray-100 rounded">
+            {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''}
+          </p>
+        </div>
+      </div>
       <CopyButton
         copyValue={address ?? ''}
         label={copyButtonText}
         className={cn(
           border.radius,
           pressable.alternate,
-          'w-full p-3',
+          'w-full p-3 font-medium',
           classNames?.copyButton,
         )}
         onSuccess={handleCopyButtonSuccess}
